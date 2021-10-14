@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Service.Query.AdminUserQuery;
+using UserManagement.Command.Handlers.CandidateCommandHandlers;
 using UserManagement.Command.Handlers.InterviewerUserCommandHandlers;
 using UserManagement.Handlers;
 using UserManagement.Persistence.EF.Repository;
@@ -29,7 +30,7 @@ namespace UserManagement.Configurations
                 .AsMatchingInterface()
                 .WithScopedLifetime());
             services.Scan(scan => scan
-                .FromAssemblyOf<AddInterviewerUserCommandHandler>()
+                .FromAssemblyOf<AddCandidateCommandHandler>()
                 .AddClasses(classes => classes.AssignableTo(typeof(IUserManagementCommandHandlerMediatR<,>)))
                 .AsImplementedInterfaces()
                 .WithScopedLifetime());
