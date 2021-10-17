@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <LangVersion>9</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+        <PackageReference Include="Scrutor.AspNetCore" Version="1.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\ServiceContracts\ScheduleManagement.Command.Handlers\ScheduleManagement.Command.Handlers.csproj" />
+        <ProjectReference Include="..\ScheduleManagement.Handlers\ScheduleManagement.Handlers.csproj" />
+        <ProjectReference Include="..\ScheduleManagement.Persistence.EF\ScheduleManagement.Persistence.EF.csproj" />
+        <ProjectReference Include="..\ScheduleManagement.Validations\ScheduleManagement.Validations.csproj" />
+    </ItemGroup>
+
+</Project>

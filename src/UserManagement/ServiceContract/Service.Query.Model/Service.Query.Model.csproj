@@ -5,11 +5,11 @@
         <LangVersion>9</LangVersion>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="MediatR" Version="9.0.0"/>
+        <PackageReference Include="MediatR" Version="9.0.0" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\..\..\Frameworks\Framework.Query\Framework.Query.csproj"/>
-        <ProjectReference Include="..\..\Domains\UserManagement.Domain\UserManagement.Domain.csproj"/>
+        <ProjectReference Include="..\..\..\Frameworks\Framework.Query\Framework.Query.csproj" />
+        <ProjectReference Include="..\..\Domains\UserManagement.Domain\UserManagement.Domain.csproj" />
     </ItemGroup>
 
 </Project>

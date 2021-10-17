@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Framework.Common;
@@ -7,7 +6,6 @@ using Framework.Exception.Exceptions.Enum;
 using Framework.Query;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Service.Query.Model.AdminRoleQuery;
 using Service.Query.Model.AdminUserQuery;
 using UserManagement.Domain;
 
@@ -41,13 +39,7 @@ namespace Service.Query.AdminUserQuery
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 UserName = user.UserName,
-                UserType = user.UserType,
-                UserRoles = _roleManager.Roles.Where(a => roles.Any(b => b == a.Name)).Select(a =>
-                    new RoleModel()
-                    {
-                        Name = a.Name,
-                        Id = a.Id.ToString()
-                    }).ToList()
+                UserType = user.UserType
             };
             return new GetAdminUserQueryResponse(true, adminUser);
         }

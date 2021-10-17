@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using UserManagement.Persistance.Context;
 
 namespace UserManagement.Persistence.EF.Context
 {

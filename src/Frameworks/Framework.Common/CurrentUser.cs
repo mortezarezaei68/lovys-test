@@ -45,5 +45,38 @@ namespace Framework.Common
             var cookieValue=_httpContextAccessor.HttpContext.Request.Cookies.ContainsKey(key);
             return cookieValue ? _httpContextAccessor.HttpContext.Request.Cookies[key] : null;
         }
+        
+    }
+    public class FakeCurrentUser : ICurrentUser
+    {
+        
+
+        public string GetUserIp()
+        {
+            throw new NotImplementedException();
+        }
+
+         string ICurrentUser.GetUserId()
+        {
+            return ConstValues.User.UserId;
+        }
+
+        public void SetHttpOnlyUserCookie(string key, string value, DateTimeOffset date, string domain)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CleanSecurityCookie(string key, string domain)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public static class ConstValues
+    {
+        public static class User
+        {
+            public static string UserId = "B0E609EB-F88E-4B20-A573-E4D16D2AD7AA";
+        }
     }
 }

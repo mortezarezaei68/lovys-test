@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\BasketManagement\ServiceContract\BasketManagement.QueryCommands\BasketManagement.QueryCommands.csproj" />
+      <ProjectReference Include="..\..\..\Frameworks\Framework.Common\Framework.Common.csproj" />
+      <ProjectReference Include="..\..\..\Frameworks\Framework.Queries\Framework.Queries.csproj" />
+      <ProjectReference Include="..\..\..\UserManagement\ServiceContract\Service.Query.Model\Service.Query.Model.csproj" />
+      <ProjectReference Include="..\..\Infrastructures\OrderManagement.Persistence.EF\OrderManagement.Persistence.EF.csproj" />
+      <ProjectReference Include="..\OrderManagement.Query.Commands\OrderManagement.Query.Commands.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Framework.Domain.Core;
 using Framework.EventBus;
 using Microsoft.EntityFrameworkCore.Storage;
-using UserManagement.Persistance.Context;
+using UserManagement.Persistence.EF.Context;
 
 namespace UserManagement.Persistence.EF.UnitOfWork
 {
