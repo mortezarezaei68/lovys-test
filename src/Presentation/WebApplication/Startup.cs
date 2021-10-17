@@ -2,12 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Framework.Common;
+using Framework.Controller.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ScheduleManagement.Configurations;
+using UserManagement.Configurations;
 
 namespace WebApplication
 {
@@ -24,29 +28,38 @@ namespace WebApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.UserServicesManagementExtension(Configuration);
+            services.ScheduleServicesManagementExtension(Configuration);
+            services.AddCustomController();
+            services.AddCustomSwagger();
+            services.AddCors(option =>
+            {
+                option.AddPolicy("EnableCorsForHttpOnly", builder =>
+                {
+                    builder.WithOrigins(
+                            "https://localhost:5001",
+                            "http://localhost",
+                            "http://localhost:8080")
+                        .AllowCredentials()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
-
-            app.UseHttpsRedirection();
+            app.UseCustomExceptionHandler();
+            app.UseCustomSwagger();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.InitializeUserDatabase().Wait();
+            app.InitializeScheduleDatabase().Wait();
             app.UseRouting();
-
+            app.UseCors("EnableCorsForHttpOnly");
+            app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

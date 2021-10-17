@@ -38,7 +38,10 @@ namespace Framework.Domain.Core
             IsDeleted = true;
             DeletedAt = DateTime.UtcNow;
         }
-
+        public void SetId(TKey id)
+        {
+            Id = id;
+        }
         public override int GetHashCode()
         {
             return GetType().GetHashCode() * 907 + Id.GetHashCode();

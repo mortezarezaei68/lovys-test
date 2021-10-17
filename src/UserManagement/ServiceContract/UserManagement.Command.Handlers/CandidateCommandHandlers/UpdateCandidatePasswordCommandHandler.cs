@@ -49,9 +49,9 @@ namespace UserManagement.Command.Handlers.CandidateCommandHandlers
             return new UpdateCandidatePasswordCommandResponse(true, ResultCode.Success);
         }
     }
-    public class UpdateCustomerPasswordCommandRequestValidator : AbstractValidator<UpdateCandidatePasswordCommandRequest>
+    public class UpdateCandidatePasswordCommandRequestValidator : AbstractValidator<UpdateCandidatePasswordCommandRequest>
     {
-        public UpdateCustomerPasswordCommandRequestValidator()
+        public UpdateCandidatePasswordCommandRequestValidator()
         {
             RuleFor(p => p.ConfirmPassword).NotEmpty().NotNull();
             RuleFor(p => p.NewPassword).NotEmpty().NotNull();

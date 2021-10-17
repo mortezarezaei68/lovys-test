@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using UserManagement.Domain;
-using UserManagement.Persistance.Context;
+using UserManagement.Persistence.EF.Context;
 
 namespace UserManagement.Configurations
 {
@@ -15,7 +15,7 @@ namespace UserManagement.Configurations
         {
             using var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
             var identityServerDbContext = serviceScope.ServiceProvider.GetRequiredService<UserManagementDbContext>();
-            identityServerDbContext.Database.Migrate();
+            await identityServerDbContext.Database.MigrateAsync();
             var roleManager = (RoleManager<Role>)serviceScope.ServiceProvider.GetService(typeof(RoleManager<Role>));
             var userManager = (UserManager<User>)serviceScope.ServiceProvider.GetService(typeof(UserManager<User>));
 

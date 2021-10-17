@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using Framework.Domain.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using UserManagement.Domain.PersistGrants;
-using UserManagement.Persistance.Context;
+using UserManagement.Persistence.EF.Context;
 using UserManagement.Persistence.EF.UnitOfWork;
 
 namespace UserManagement.Persistence.EF.Repository

@@ -1,4 +1,5 @@
 using System;
+using EmailManagement.SendMessage;
 using Framework.EventBus;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -11,8 +12,8 @@ namespace UserManagement.Configurations
     {
         public static IServiceCollection BootstrapEventBusServices(this IServiceCollection services,IConfiguration configuration)
         {
-            // services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
-            // services.AddTransient<ISendingEmail, SendingEmail>();
+            services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
+            services.AddTransient<ISendingEmail, SendingEmail>();
             services.AddTransient(typeof(IdentityUnitOfWork));
             services.AddScoped<IIdentityUnitOfWork,IdentityUnitOfWork>();
             services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());

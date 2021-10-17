@@ -18,4 +18,22 @@
         <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     </ItemGroup>
 
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Frameworks\Framework.Controller\Framework.Controller.csproj" />
+      <ProjectReference Include="..\..\ScheduleManagement\Infrastructures\ScheduleManagement.Configurations\ScheduleManagement.Configurations.csproj" />
+      <ProjectReference Include="..\..\UserManagement\Infrastructures\UserManagement.Configurations\UserManagement.Configurations.csproj" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Home\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Home\Privacy.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Shared\Error.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Shared\_Layout.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Shared\_ValidationScriptsPartial.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\_ViewImports.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\_ViewStart.cshtml" />
+    </ItemGroup>
+
 </Project>

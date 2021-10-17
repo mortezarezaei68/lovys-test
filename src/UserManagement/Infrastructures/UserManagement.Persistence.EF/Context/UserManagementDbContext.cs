@@ -11,7 +11,7 @@ using UserManagement.Domain;
 using UserManagement.Domain.PersistGrants;
 using UserManagement.Persistence.EF.DomainConfigurations;
 
-namespace UserManagement.Persistance.Context
+namespace UserManagement.Persistence.EF.Context
 {
     public class UserManagementDbContext:IdentityDbContext<User,Role,int>
     {

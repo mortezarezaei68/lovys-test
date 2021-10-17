@@ -4,11 +4,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.IdentityModel.Tokens;
+
 using UserManagement.Domain;
-using UserManagement.Persistance;
-using UserManagement.Persistance.Context;
+using UserManagement.Persistence.EF.Context;
 using UserManagement.Validations;
 
 namespace UserManagement.Configurations

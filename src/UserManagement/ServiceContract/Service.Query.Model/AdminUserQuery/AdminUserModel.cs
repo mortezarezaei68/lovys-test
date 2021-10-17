@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using Service.Query.Model.AdminRoleQuery;
 using UserManagement.Domain;
 
 namespace Service.Query.Model.AdminUserQuery
@@ -14,6 +11,5 @@ namespace Service.Query.Model.AdminUserQuery
         public string Email { get; set; }
         public string UserName { get; set; }
         public UserType UserType { get; set; }
-        public List<RoleModel> UserRoles { get; set; }
     }
 }
