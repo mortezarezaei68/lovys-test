@@ -9,8 +9,8 @@ namespace UserManagement.Configurations
         {
             services.IdentityDbInjections(configuration);
             services.BootstrapEventBusServices(configuration);
-            services.AddCustomAuthenticationAuthorization(configuration);
             services.BootstrapCustomizeServices();
+            services.AddCustomAuthenticationAuthorization(configuration);
         }
     }
 }

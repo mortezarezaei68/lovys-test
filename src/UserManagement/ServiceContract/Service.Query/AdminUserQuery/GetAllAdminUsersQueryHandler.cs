@@ -1,7 +1,6 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Framework.Query;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Service.Query.Model.AdminUserQuery;
@@ -9,7 +8,7 @@ using UserManagement.Domain;
 
 namespace Service.Query.AdminUserQuery
 {
-    public class GetAllAdminUsersQueryHandler:IQueryHandlerMediatR<GetAllAdminUserQueryRequest,GetAllAdminUserQueryResponse>
+    public class GetAllAdminUsersQueryHandler:IGetAllAdminUsersQueryHandler
     {
         private readonly UserManager<User> _userManager;
         public GetAllAdminUsersQueryHandler(UserManager<User> userManager)

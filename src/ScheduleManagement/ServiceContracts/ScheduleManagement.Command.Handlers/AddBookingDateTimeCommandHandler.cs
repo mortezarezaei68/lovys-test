@@ -41,18 +41,32 @@ namespace ScheduleManagement.Command.Handlers
 
             _validation.CheckValidTimeRange(request.StartedTime, request.EndedTime);
             var existBookDate = await _repository.GetByBookDate(request.BookingDate);
+            var timeSlots = new List<BookingTimeOption>();
+            var timeSlotsLong = request.EndedTime - request.StartedTime;
+            for (int i = 0; i < timeSlotsLong.Hours; i++)
+            {
+                request.EndedTime = request.StartedTime.Add(new TimeSpan(i + 1, 0, 0));
+                request.StartedTime = request.StartedTime.Add(new TimeSpan(i, 0, 0));
+                timeSlots.Add(new BookingTimeOption
+                {
+                    StartedTime = request.StartedTime,
+                    EndedTime = request.EndedTime
+                });
+            }
 
             if (existBookDate is not null)
             {
-                existBookDate.Update(request.StartedTime, request.EndedTime, userId);
+                existBookDate.Update(timeSlots, userId);
                 return new AddBookingDateTimeCommandResponse(true, ResultCode.Success);
             }
 
-            var bookingDate = BookingDate.Add(request.BookingDate, request.StartedTime, request.EndedTime, userId);
+
+            var bookingDate = BookingDate.Add(request.BookingDate,userId, timeSlots);
             _repository.Add(bookingDate);
             return new AddBookingDateTimeCommandResponse(true, ResultCode.Success);
         }
     }
+
     public class AddBookingDateTimeCommandRequestValidator : AbstractValidator<AddBookingDateTimeCommandRequest>
     {
         public AddBookingDateTimeCommandRequestValidator()

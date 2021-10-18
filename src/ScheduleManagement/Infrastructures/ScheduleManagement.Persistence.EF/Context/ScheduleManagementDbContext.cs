@@ -17,5 +17,7 @@ namespace ScheduleManagement.Persistence.EF.Context
         }
 
         public DbSet<BookingDate> BookingDates { get; set; }
+        public DbSet<BookingTime> BookingTimes { get; set; }
+        public DbSet<BookingDateBookingTimeView> BookingDateBookingTimeViews { get; set; }
     }
 }

@@ -15,7 +15,6 @@
         <PackageReference Include="Serilog.Sinks.Debug" Version="1.0.1" />
         <PackageReference Include="Serilog.Exceptions" Version="6.0.0" />
         <PackageReference Include="Scrutor.AspNetCore" Version="1.0.0" />
-        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     </ItemGroup>
 
 

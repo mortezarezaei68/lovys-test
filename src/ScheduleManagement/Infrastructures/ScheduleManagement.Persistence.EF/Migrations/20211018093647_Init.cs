@@ -41,23 +41,23 @@ namespace ScheduleManagement.Persistence.EF.Migrations
                     StartedBookingTime = table.Column<TimeSpan>(nullable: false),
                     EndedBookingTime = table.Column<TimeSpan>(nullable: false),
                     SubjectId = table.Column<string>(nullable: true),
-                    BookingTimeId = table.Column<int>(nullable: false)
+                    BookingDateId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BookingTimes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BookingTimes_BookingDates_BookingTimeId",
-                        column: x => x.BookingTimeId,
+                        name: "FK_BookingTimes_BookingDates_BookingDateId",
+                        column: x => x.BookingDateId,
                         principalTable: "BookingDates",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_BookingTimes_BookingTimeId",
+                name: "IX_BookingTimes_BookingDateId",
                 table: "BookingTimes",
-                column: "BookingTimeId");
+                column: "BookingDateId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

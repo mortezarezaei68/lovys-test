@@ -4,14 +4,12 @@ using ScheduleManagement.Domain;
 
 namespace ScheduleManagement.Persistence.EF.DomainConfigurations
 {
-    public class BookingDateEntityConfiguration:IEntityTypeConfiguration<BookingDate>
+    public class BookingTimeEntityConfiguration:IEntityTypeConfiguration<BookingTime>
     {
-        public void Configure(EntityTypeBuilder<BookingDate> builder)
+        public void Configure(EntityTypeBuilder<BookingTime> builder)
         {
             builder.HasQueryFilter(a => !a.IsDeleted);
             builder.HasKey(a => a.Id);
-            builder.Property(a => a.DateOfBooking).HasColumnType("date");
-            builder.HasMany(a => a.BookingTimes);
         }
     }
 }
