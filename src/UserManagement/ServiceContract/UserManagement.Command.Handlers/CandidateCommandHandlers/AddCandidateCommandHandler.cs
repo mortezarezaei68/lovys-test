@@ -6,7 +6,7 @@ using Framework.Exception.Exceptions;
 using Framework.Exception.Exceptions.Enum;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using UserManagement.Commands.CustomerUserCommands;
+using UserManagement.Commands.CandidateUserCommands;
 using UserManagement.Domain;
 using UserManagement.Handlers;
 

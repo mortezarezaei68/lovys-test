@@ -1,18 +1,10 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Framework.Common;
-using Framework.EventBus;
-using Framework.Exception.Exceptions;
-using Framework.Query;
 using Microsoft.EntityFrameworkCore;
 using ScheduleManagement.Persistence.EF.Context;
 using ScheduleManagement.Query.Commands;
-using Service.Query.AdminUserQuery;
-using Service.Query.Model.AdminUserQuery;
-using Service.Query.Model.CustomerUserQuery;
-using UserManagement.Domain;
 
 namespace ScheduleManagement.Query.Handlers
 {

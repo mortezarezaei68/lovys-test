@@ -4,10 +4,9 @@ using Framework.Controller.Extensions;
 using Framework.EventBus;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Service.Query.AdminUserQuery;
-using Service.Query.Model.AdminUserQuery;
-using Service.Query.Model.CustomerUserQuery;
-using UserManagement.Commands.CustomerUserCommands;
+using Service.Query.GetAllUserQuery;
+using Service.Query.Model.GetAllUserQuery;
+using UserManagement.Commands.CandidateUserCommands;
 
 namespace WebApplication.Controllers
 {
@@ -15,13 +14,13 @@ namespace WebApplication.Controllers
     public class UserController : BaseController
     {
         private readonly IEventBus _eventBus;
-        private readonly IGetAllAdminUsersQueryHandler _getAllAdminUsersQueryHandler;
+        private readonly IGetAllUsersQueryHandler _getAllUsersQueryHandler;
 
 
-        public UserController(IEventBus eventBus, IGetAllAdminUsersQueryHandler getAllAdminUsersQueryHandler)
+        public UserController(IEventBus eventBus, IGetAllUsersQueryHandler getAllUsersQueryHandler)
         {
             _eventBus = eventBus;
-            _getAllAdminUsersQueryHandler = getAllAdminUsersQueryHandler;
+            _getAllUsersQueryHandler = getAllUsersQueryHandler;
         }
 
         [HttpPost]
@@ -42,7 +41,7 @@ namespace WebApplication.Controllers
         [Authorize]
         public async Task<ActionResult> GetAllAdminUser(CancellationToken cancellationToken)
         {
-            var data = _getAllAdminUsersQueryHandler.Handle(new GetAllAdminUserQueryRequest(), cancellationToken);
+            var data = _getAllUsersQueryHandler.Handle(new GetAllUserQueryRequest(), cancellationToken);
             return Ok(await data);
         }
     }

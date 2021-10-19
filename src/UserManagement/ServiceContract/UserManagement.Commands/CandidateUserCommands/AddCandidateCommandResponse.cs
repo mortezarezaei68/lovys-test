@@ -1,7 +1,7 @@
 using Framework.Commands.CommandHandlers;
 using Framework.Exception.Exceptions.Enum;
 
-namespace UserManagement.Commands.CustomerUserCommands
+namespace UserManagement.Commands.CandidateUserCommands
 {
     public class AddCandidateCommandResponse:ResponseCommand
     {
