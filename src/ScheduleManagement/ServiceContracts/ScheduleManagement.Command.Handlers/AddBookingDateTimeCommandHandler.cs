@@ -38,21 +38,10 @@ namespace ScheduleManagement.Command.Handlers
             CancellationToken cancellationToken, RequestHandlerDelegate<AddBookingDateTimeCommandResponse> next)
         {
             var userId = _currentUser.GetUserId();
+            var timeSlots = CreateTimeSlots(request.StartedTime, request.EndedTime);
 
             _validation.CheckValidTimeRange(request.StartedTime, request.EndedTime);
             var existBookDate = await _repository.GetByBookDate(request.BookingDate);
-            var timeSlots = new List<BookingTimeOption>();
-            var timeSlotsLong = request.EndedTime - request.StartedTime;
-            for (int i = 0; i < timeSlotsLong.Hours; i++)
-            {
-                request.EndedTime = request.StartedTime.Add(new TimeSpan(i + 1, 0, 0));
-                request.StartedTime = request.StartedTime.Add(new TimeSpan(i, 0, 0));
-                timeSlots.Add(new BookingTimeOption
-                {
-                    StartedTime = request.StartedTime,
-                    EndedTime = request.EndedTime
-                });
-            }
 
             if (existBookDate is not null)
             {
@@ -64,6 +53,24 @@ namespace ScheduleManagement.Command.Handlers
             var bookingDate = BookingDate.Add(request.BookingDate,userId, timeSlots);
             _repository.Add(bookingDate);
             return new AddBookingDateTimeCommandResponse(true, ResultCode.Success);
+        }
+
+        private List<BookingTimeOption> CreateTimeSlots(TimeSpan requestStartedTime, TimeSpan requestEndedTime)
+        {
+            var timeSlots = new List<BookingTimeOption>();
+            var timeSlotsLong = requestEndedTime - requestStartedTime;
+            for (int i = 0; i < timeSlotsLong.Hours; i++)
+            {
+                var endedTime = requestStartedTime.Add(new TimeSpan(i + 1, 0, 0));
+                var startedTime = requestStartedTime.Add(new TimeSpan(i, 0, 0));
+                timeSlots.Add(new BookingTimeOption
+                {
+                    StartedTime = endedTime,
+                    EndedTime = startedTime
+                });
+            }
+
+            return timeSlots;
         }
     }
 
