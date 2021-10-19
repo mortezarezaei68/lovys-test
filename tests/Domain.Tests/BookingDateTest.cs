@@ -14,17 +14,23 @@ namespace Domain.Tests
         public void Should_create_booking_date()
         {
             DateTime dateOfBooking = DateTime.Now;
-            TimeSpan startedBookingTime = new TimeSpan(13, 0, 0);
-            TimeSpan endedBookingTime = new TimeSpan(14, 0, 0);
+            var bookingOption = new List<BookingTimeOption>()
+            {
+                new ()
+                {
+                    EndedTime = new TimeSpan(14, 0, 0),
+                    StartedTime = new TimeSpan(13, 0, 0)
+                }
+            };
             string subjectId = "940FAD00-8D71-4092-BCE7-9B72D843F72C";
-            var bookingDate = BookingDate.Add(dateOfBooking, startedBookingTime, endedBookingTime, subjectId);
+            var bookingDate = BookingDate.Add(dateOfBooking,subjectId, bookingOption );
             bookingDate.DateOfBooking.Should().Be(dateOfBooking);
 
             bookingDate.BookingTimes.Should().SatisfyRespectively(first =>
             {
                 first.SubjectId.Should().Be(subjectId);
-                first.EndedBookingTime.Should().Be(endedBookingTime);
-                first.StartedBookingTime.Should().Be(startedBookingTime);
+                first.EndedBookingTime.Should().Be(bookingOption.First().EndedTime);
+                first.StartedBookingTime.Should().Be(bookingOption.First().StartedTime);
                 first.SubjectId.Should().Be(subjectId);
             });
         }
@@ -33,79 +39,74 @@ namespace Domain.Tests
         public void Should_update_booking_date()
         {
             DateTime dateOfBooking = DateTime.Now;
-            TimeSpan startedBookingTime = new TimeSpan(13, 0, 0);
-            TimeSpan endedBookingTime = new TimeSpan(14, 0, 0);
+            var bookingOption = new List<BookingTimeOption>()
+            {
+                new ()
+                {
+                    EndedTime = new TimeSpan(14, 0, 0),
+                    StartedTime = new TimeSpan(13, 0, 0)
+                }
+            };
             string subjectId = "940FAD00-8D71-4092-BCE7-9B72D843F72C";
-            var bookingDate = BookingDate.Add(dateOfBooking, startedBookingTime, endedBookingTime, subjectId);
+            var bookingDate = BookingDate.Add(dateOfBooking, subjectId,bookingOption);
             bookingDate.DateOfBooking.Should().Be(dateOfBooking);
 
             bookingDate.BookingTimes.Should().SatisfyRespectively(first =>
             {
                 first.SubjectId.Should().Be(subjectId);
-                first.EndedBookingTime.Should().Be(endedBookingTime);
-                first.StartedBookingTime.Should().Be(startedBookingTime);
+                first.EndedBookingTime.Should().Be(bookingOption.First().EndedTime);
+                first.StartedBookingTime.Should().Be(bookingOption.First().StartedTime);
                 first.SubjectId.Should().Be(subjectId);
             });
         }
 
         [Fact]
-        public void Should_update_an_external_organization()
+        public void Should_update_an_booking_time()
         {
             var bookingDate = GetBookingDate();
             var secondBookingDate=ObjectDate.Last();
-            bookingDate.Update(secondBookingDate.StartedTime, secondBookingDate.EndedTime, secondBookingDate.SubjectId);
+            const string subjectId = "940FAD00-8D71-4092-BCE7-9B72D843F72C";
+            bookingDate.Update(ObjectDate, subjectId);
 
             bookingDate.BookingTimes.Should().SatisfyRespectively(first =>
                 {
                     first.Id.Should().Be(1);
                     first.EndedBookingTime.Should().Be(ObjectDate.First().EndedTime);
                     first.StartedBookingTime.Should().Be(ObjectDate.First().StartedTime);
-                    first.SubjectId.Should().Be(ObjectDate.First().SubjectId);
+                    first.SubjectId.Should().Be(subjectId);
 
                 },
                 second =>
                 {
-                    second.SubjectId.Should().Be(secondBookingDate.SubjectId);
+                    second.SubjectId.Should().Be(subjectId);
                     second.EndedBookingTime.Should().Be(secondBookingDate.EndedTime);
                     second.StartedBookingTime.Should().Be(secondBookingDate.StartedTime);
                 });
         }
 
 
-        public static IEnumerable<AddBookingDateTime> ObjectDate =>
-            new List<AddBookingDateTime>
+        public static IEnumerable<BookingTimeOption> ObjectDate =>
+            new List<BookingTimeOption>
             {
-                new AddBookingDateTime
+                new BookingTimeOption
                 {
-                    BookingDate = DateTime.Now,
                     StartedTime = new TimeSpan(13, 0, 0),
                     EndedTime = new TimeSpan(14, 0, 0),
-                    SubjectId = "940FAD00-8D71-4092-BCE7-9B72D843F72C"
                 },
-                new AddBookingDateTime
+                new BookingTimeOption
                 {
-                    BookingDate = DateTime.Now,
-                    StartedTime = new TimeSpan(15, 0, 0),
-                    EndedTime = new TimeSpan(18, 0, 0),
-                    SubjectId = "F7F9D597-96ED-499E-B488-7B94A416DA81"
+                    StartedTime = new TimeSpan(14, 0, 0),
+                    EndedTime = new TimeSpan(15, 0, 0),
                 },
             };
 
         private static BookingDate GetBookingDate()
         {
             var firstBookingDate = ObjectDate.First();
-            var bookingDate = BookingDate.Add(firstBookingDate.BookingDate, firstBookingDate.StartedTime,
-                firstBookingDate.EndedTime, firstBookingDate.SubjectId);
+            const string subjectId = "940FAD00-8D71-4092-BCE7-9B72D843F72C";
+            var bookingDate = BookingDate.Add(DateTime.Now, subjectId,ObjectDate );
             bookingDate.BookingTimes.First().SetId(1);
             return bookingDate;
-        }
-
-        public class AddBookingDateTime
-        {
-            public DateTime BookingDate { get; set; }
-            public TimeSpan StartedTime { get; set; }
-            public TimeSpan EndedTime { get; set; }
-            public string SubjectId { get; set; }
         }
     }
 }
