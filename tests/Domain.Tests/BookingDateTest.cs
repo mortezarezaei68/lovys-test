@@ -13,7 +13,7 @@ namespace Domain.Tests
         [Fact]
         public void Should_create_booking_date()
         {
-            DateTime dateOfBooking = DateTime.Now;
+            var dateOfBooking = DateTime.Now;
             var bookingOption = new List<BookingTimeOption>()
             {
                 new ()
@@ -38,7 +38,7 @@ namespace Domain.Tests
         [Fact]
         public void Should_update_booking_date()
         {
-            DateTime dateOfBooking = DateTime.Now;
+            var dateOfBooking = DateTime.Now;
             var bookingOption = new List<BookingTimeOption>()
             {
                 new ()
@@ -85,15 +85,15 @@ namespace Domain.Tests
         }
 
 
-        public static IEnumerable<BookingTimeOption> ObjectDate =>
+        private static IEnumerable<BookingTimeOption> ObjectDate =>
             new List<BookingTimeOption>
             {
-                new BookingTimeOption
+                new ()
                 {
                     StartedTime = new TimeSpan(13, 0, 0),
                     EndedTime = new TimeSpan(14, 0, 0),
                 },
-                new BookingTimeOption
+                new ()
                 {
                     StartedTime = new TimeSpan(14, 0, 0),
                     EndedTime = new TimeSpan(15, 0, 0),
@@ -102,7 +102,6 @@ namespace Domain.Tests
 
         private static BookingDate GetBookingDate()
         {
-            var firstBookingDate = ObjectDate.First();
             const string subjectId = "940FAD00-8D71-4092-BCE7-9B72D843F72C";
             var bookingDate = BookingDate.Add(DateTime.Now, subjectId,ObjectDate );
             bookingDate.BookingTimes.First().SetId(1);
