@@ -11,7 +11,7 @@ using ScheduleManagement.Query.Handlers;
 
 namespace WebApplication.Controllers
 {
-    [Microsoft.AspNetCore.Components.Route("api/v1/[controller]")]
+    [Route("api/v1/[controller]")]
     public class ScheduleController : BaseController
     {
         private readonly IEventBus _eventBus;
@@ -44,7 +44,7 @@ namespace WebApplication.Controllers
             return Ok(await result);
         }
         
-        [HttpGet("interview-schedule")]
+        [HttpGet("interviewer-schedule")]
         [Authorize]
         public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
         {
