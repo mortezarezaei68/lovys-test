@@ -40,7 +40,7 @@ if you want to manage this application in different domain you have to set "Doma
   }
 ```
 
-you should set cors origin in Startup.cs
+you should set cors origin in `Startup.cs`
 ## Docker
 you can build and running application in docker with this command in terminal or dos:
     ```
