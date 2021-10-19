@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -22,58 +23,83 @@ namespace ScheduleManagement.Query.Handlers
         public async Task<GetAllUserScheduleQueryResponse> Handle(GetAllUserScheduleQueryRequest request,
             CancellationToken cancellationToken)
         {
+            var interviewerBookingDateTime = await
+                _context.BookingDateBookingTimeViews.Where(a => a.UserType == (int)UserType.Interviewer)
+                    .ToListAsync(cancellationToken: cancellationToken);
 
             var candidateBookingDateTime = await
                 _context.BookingDateBookingTimeViews.Where(a => a.UserType == (int)UserType.Candidate)
                     .ToListAsync(cancellationToken: cancellationToken);
 
-            var interviewBookingDateTime = await
-                _context.BookingDateBookingTimeViews.Where(a => a.UserType == (int)UserType.Interviewer)
-                    .ToListAsync(cancellationToken: cancellationToken);
-            
-            var objects = new List<InterviewerScheduleQueryModel>();
-            foreach (var interviewBookingTime in interviewBookingDateTime)
-            {
-                var selectedCandidate =
-                    candidateBookingDateTime.Where(a => a.DateOfBooking == interviewBookingTime.DateOfBooking &&
-                                                        a.StartedBookingTime.IsOverlap(
-                                                            interviewBookingTime.StartedBookingTime,
-                                                            interviewBookingTime.EndedBookingTime) &&
-                                                        a.EndedBookingTime.IsOverlap(
-                                                            interviewBookingTime.StartedBookingTime,
-                                                            interviewBookingTime.EndedBookingTime));
-                objects.Add(new InterviewerScheduleQueryModel
+            // get intersect from interviewer and candidate
+            var intersectResult = interviewerBookingDateTime
+                .Intersect(interviewerBookingDateTime, new InterviewerCandidateComparer())
+                .Intersect(candidateBookingDateTime, new InterviewerCandidateComparer())
+                .Select(a => new
                 {
-                    CandidateSchedule = selectedCandidate.Select(a => new CandidateScheduleQueryModel
+                    bookingDate = a.DateOfBooking,
+                    endedTime = a.EndedBookingTime,
+                    startedTime = a.StartedBookingTime
+                }).ToList();
+
+            //map interviewer and candidate together by time and date
+            var bookingDateTimeResult =
+                //get interviewer filter by intersect value
+                interviewerBookingDateTime.Where(b => intersectResult.Any(a =>
+                        a.bookingDate == b.DateOfBooking && a.endedTime == b.EndedBookingTime &&
+                        a.startedTime == b.StartedBookingTime))
+                    //join with candidate filter by intersect value
+                    .Join(
+                        candidateBookingDateTime.Where(b => intersectResult.Any(a => a.bookingDate == b.DateOfBooking &&
+                            a.endedTime == b.EndedBookingTime &&
+                            a.startedTime == b.StartedBookingTime)),
+                        //join by date of booking and ended booking time and started booking time
+                        interviewer => new
+                            { interviewer.DateOfBooking, interviewer.EndedBookingTime, interviewer.StartedBookingTime },
+                        candidate => new
+                            { candidate.DateOfBooking, candidate.EndedBookingTime, candidate.StartedBookingTime },
+                        (interviewer, candidate) => new
+                        {
+                            interviewer,
+                            candidate
+                        })
+                    //group by interviewers list
+                    .GroupBy(a => a.interviewer).Select(a => new InterviewerScheduleQueryModel
                     {
-                        EndedDate = a.EndedBookingTime,
-                        FirstName = a.FirstName,
-                        LastName = a.LastName,
-                        StartedDate = a.StartedBookingTime
-                    }),
-                    EndedDate = interviewBookingTime.EndedBookingTime,
-                    FirstName = interviewBookingTime.FirstName,
-                    LastName = interviewBookingTime.LastName,
-                    StartedDate = interviewBookingTime.StartedBookingTime,
-                    BookingDate = interviewBookingTime.DateOfBooking
-                });
-            }
+                        BookingDate = a.Key.DateOfBooking,
+                        EndedDate = a.Key.EndedBookingTime,
+                        FirstName = a.Key.FirstName,
+                        LastName = a.Key.LastName,
+                        StartedDate = a.Key.StartedBookingTime,
+                        CandidateSchedule = a.Select(b => new CandidateScheduleQueryModel
+                        {
+                            EndedDate = b.candidate.EndedBookingTime,
+                            FirstName = b.candidate.FirstName,
+                            LastName = b.candidate.LastName,
+                            StartedDate = b.candidate.StartedBookingTime
+                        })
+                    }).ToList();
 
-            var object2 = new List<object>();
-            foreach (var interviewBookingTime in objects)
+            return new GetAllUserScheduleQueryResponse(true, bookingDateTimeResult);
+        }
+    }
+
+    internal class InterviewerCandidateComparer : IEqualityComparer<BookingDateBookingTimeView>
+    {
+        public bool Equals(BookingDateBookingTimeView view, BookingDateBookingTimeView timeView)
+        {
+            if (view.EndedBookingTime == timeView.EndedBookingTime && view.StartedBookingTime == timeView.StartedBookingTime &&
+                view.DateOfBooking == timeView.DateOfBooking && view.SubjectId != timeView.SubjectId)
             {
-                var selectedCandidate =
-                    objects.Where(a => a.BookingDate == interviewBookingTime.BookingDate &&
-                                                        a.StartedDate.IsOverlap(
-                                                            interviewBookingTime.StartedDate,
-                                                            interviewBookingTime.EndedDate) &&
-                                                        a.EndedDate.IsOverlap(
-                                                            interviewBookingTime.StartedDate,
-                                                            interviewBookingTime.EndedDate)).ToList();
-                object2.AddRange(selectedCandidate);
+                return true;
             }
 
-            return new GetAllUserScheduleQueryResponse(true, objects);
+            return false;
+        }
+
+        public int GetHashCode(BookingDateBookingTimeView obj)
+        {
+            return obj.DateOfBooking.GetHashCode();
         }
     }
 }
