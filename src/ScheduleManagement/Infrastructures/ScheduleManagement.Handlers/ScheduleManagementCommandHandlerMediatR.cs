@@ -9,26 +9,26 @@ using ScheduleManagement.Persistence.EF.UnitOfWork;
 
 namespace ScheduleManagement.Handlers
 {
-    public class ScheduleManagementCommandHandlerMediatR<TOrderCommandRequest, TOrderCommandResponse> :
-        IScheduleManagementCommandHandlerMediatR<TOrderCommandRequest, TOrderCommandResponse>
-        where TOrderCommandResponse : ResponseCommand where TOrderCommandRequest : IRequest<TOrderCommandResponse>
+    public class ScheduleManagementCommandHandlerMediatR<TOrderCommandRequest, TCommandResponse> :
+        IScheduleManagementCommandHandlerMediatR<TOrderCommandRequest, TCommandResponse>
+        where TCommandResponse : ResponseCommand where TOrderCommandRequest : IRequest<TCommandResponse>
     {
-        private readonly ILogger<ScheduleManagementCommandHandlerMediatR<TOrderCommandRequest, TOrderCommandResponse>>
+        private readonly ILogger<ScheduleManagementCommandHandlerMediatR<TOrderCommandRequest, TCommandResponse>>
             _logger;
 
         private readonly IScheduleManagementUnitOfWork _unitOfWork;
 
         public ScheduleManagementCommandHandlerMediatR(IScheduleManagementUnitOfWork unitOfWork,
-            ILogger<ScheduleManagementCommandHandlerMediatR<TOrderCommandRequest, TOrderCommandResponse>> logger)
+            ILogger<ScheduleManagementCommandHandlerMediatR<TOrderCommandRequest, TCommandResponse>> logger)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
         }
 
-        public async Task<TOrderCommandResponse> Handle(TOrderCommandRequest request,
-            CancellationToken cancellationToken, RequestHandlerDelegate<TOrderCommandResponse> next)
+        public async Task<TCommandResponse> Handle(TOrderCommandRequest request,
+            CancellationToken cancellationToken, RequestHandlerDelegate<TCommandResponse> next)
         {
-            if (request is IScheduleManagementRequest<TOrderCommandResponse>)
+            if (request is IScheduleManagementRequest<TCommandResponse>)
             {
                 try
                 {

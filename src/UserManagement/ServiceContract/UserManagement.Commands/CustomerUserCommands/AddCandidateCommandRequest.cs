@@ -11,5 +11,6 @@ namespace UserManagement.Commands.CustomerUserCommands
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
         public string Email { get; set; }
+        public int UserType { get; set; }
     }
 }

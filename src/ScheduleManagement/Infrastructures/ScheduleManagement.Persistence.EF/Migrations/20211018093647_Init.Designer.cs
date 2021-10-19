@@ -10,7 +10,7 @@ using ScheduleManagement.Persistence.EF.Context;
 namespace ScheduleManagement.Persistence.EF.Migrations
 {
     [DbContext(typeof(ScheduleManagementDbContext))]
-    [Migration("20211016181456_Init")]
+    [Migration("20211018093647_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,54 +54,55 @@ namespace ScheduleManagement.Persistence.EF.Migrations
                     b.ToTable("BookingDates");
                 });
 
-            modelBuilder.Entity("ScheduleManagement.Domain.BookingDate", b =>
+            modelBuilder.Entity("ScheduleManagement.Domain.BookingTime", b =>
                 {
-                    b.OwnsMany("ScheduleManagement.Domain.BookingTime", "BookingTimes", b1 =>
-                        {
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int")
-                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                            b1.Property<int>("BookingTimeId")
-                                .HasColumnType("int");
+                    b.Property<int?>("BookingDateId")
+                        .HasColumnType("int");
 
-                            b1.Property<DateTime>("CreatedAt")
-                                .HasColumnType("datetime2");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
-                            b1.Property<int>("CreatedBy")
-                                .HasColumnType("int");
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
 
-                            b1.Property<DateTime>("DeletedAt")
-                                .HasColumnType("datetime2");
+                    b.Property<DateTime>("DeletedAt")
+                        .HasColumnType("datetime2");
 
-                            b1.Property<TimeSpan>("EndedBookingTime")
-                                .HasColumnType("time");
+                    b.Property<TimeSpan>("EndedBookingTime")
+                        .HasColumnType("time");
 
-                            b1.Property<bool>("IsDeleted")
-                                .HasColumnType("bit");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
-                            b1.Property<TimeSpan>("StartedBookingTime")
-                                .HasColumnType("time");
+                    b.Property<TimeSpan>("StartedBookingTime")
+                        .HasColumnType("time");
 
-                            b1.Property<string>("SubjectId")
-                                .HasColumnType("nvarchar(max)");
+                    b.Property<string>("SubjectId")
+                        .HasColumnType("nvarchar(max)");
 
-                            b1.Property<DateTime>("UpdatedAt")
-                                .HasColumnType("datetime2");
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
-                            b1.Property<int>("UpdatedBy")
-                                .HasColumnType("int");
+                    b.Property<int>("UpdatedBy")
+                        .HasColumnType("int");
 
-                            b1.HasKey("Id");
+                    b.HasKey("Id");
 
-                            b1.HasIndex("BookingTimeId");
+                    b.HasIndex("BookingDateId");
 
-                            b1.ToTable("BookingTimes");
+                    b.ToTable("BookingTimes");
+                });
 
-                            b1.WithOwner()
-                                .HasForeignKey("BookingTimeId");
-                        });
+            modelBuilder.Entity("ScheduleManagement.Domain.BookingTime", b =>
+                {
+                    b.HasOne("ScheduleManagement.Domain.BookingDate", null)
+                        .WithMany("BookingTimes")
+                        .HasForeignKey("BookingDateId");
                 });
 #pragma warning restore 612, 618
         }

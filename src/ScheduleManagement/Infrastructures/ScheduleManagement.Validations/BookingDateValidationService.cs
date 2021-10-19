@@ -10,6 +10,9 @@ namespace ScheduleManagement.Validations
             var subtractTime = endedDate - startedDate;
             if (subtractTime.TotalHours < 0)
                 throw new AppException("selected wrong time range");
+            
+            if (endedDate.Minutes!=0 || startedDate.Minutes!=0)
+                throw new AppException("selected wrong time range.please select time with out minutes");
 
 
             if (subtractTime.TotalHours < 1)

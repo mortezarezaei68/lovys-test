@@ -27,7 +27,7 @@ namespace UserManagement.Command.Handlers.CandidateCommandHandlers
         {
             if (request.Password != request.ConfirmPassword)
                 throw new AppException(ResultCode.BadRequest, "confirm password not the same");
-            var user = User.Add(request.UserName, request.FirstName, request.LastName, request.Email, UserType.Candidate);
+            var user = User.Add(request.UserName, request.FirstName, request.LastName, request.Email, (UserType)request.UserType);
             var result = await _userManager.CreateAsync(user,
                 request.Password);
             if (result.Succeeded)
@@ -45,6 +45,7 @@ namespace UserManagement.Command.Handlers.CandidateCommandHandlers
             RuleFor(p => p.FirstName).NotEmpty().NotNull();
             RuleFor(p => p.LastName).NotEmpty().NotNull();
             RuleFor(p => p.UserName).NotEmpty().NotNull();
+            RuleFor(p => p.UserType).NotNull();
             RuleFor(p => p.Email).NotEmpty().NotNull().EmailAddress();
             RuleFor(p => p.Password).Equal(p => p.ConfirmPassword).NotNull().NotEmpty();
             RuleFor(a => a.Password).Matches(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,}$").NotNull().NotEmpty()

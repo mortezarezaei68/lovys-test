@@ -11,37 +11,54 @@ namespace ScheduleManagement.Domain
         public DateTime DateOfBooking { get; private set; }
         private readonly List<BookingTime> _bookingTimes = new();
         public IReadOnlyCollection<BookingTime> BookingTimes => _bookingTimes;
-        public static BookingDate Add(DateTime dateOfBooking, TimeSpan startedBookingTime, TimeSpan endedBookingTime,
-            string subjectId)
+        public static BookingDate Add(DateTime dateOfBooking,string subjectId, IEnumerable<BookingTimeOption> bookingTimes)
         {
             var bookingDate = new BookingDate
             {
                 DateOfBooking = dateOfBooking
             };
-            bookingDate._bookingTimes.Add(BookingTime.Add(startedBookingTime, endedBookingTime, subjectId));
+            foreach (var bookingTime in bookingTimes)
+            {
+                bookingDate._bookingTimes.Add(BookingTime.Add(bookingTime.StartedTime, bookingTime.EndedTime, subjectId));
+            }
+           
             return bookingDate;
         }
 
-        public void Update(TimeSpan startedBookingTime, TimeSpan endedBookingTime,
-            string subjectId)
+        public void Update(IEnumerable<BookingTimeOption> bookingTimes,string subjectId)
         {
             var bookingTime = _bookingTimes.FirstOrDefault(a => a.SubjectId == subjectId);
             if (bookingTime is null)
             {
-                _bookingTimes.Add(BookingTime.Add(startedBookingTime, endedBookingTime, subjectId));
+                foreach (var bookingTimeOption in bookingTimes)
+                {
+                    _bookingTimes.Add(BookingTime.Add(bookingTimeOption.StartedTime, bookingTimeOption.EndedTime, subjectId));
+                }
             }
             else
             {
-                var existBookingTime = _bookingTimes.Where(a =>
-                    a.SubjectId == subjectId &&
-                    a.StartedBookingTime.IsBetween(startedBookingTime, endedBookingTime) ||
-                    a.EndedBookingTime.IsBetween(startedBookingTime, endedBookingTime));
-                foreach (var time in existBookingTime)
+                foreach (var bookingTimeOption in bookingTimes)
                 {
-                    time.Delete();
-                }
+                    var existOverlap = _bookingTimes.Where(a =>
+                        a.SubjectId == subjectId &&
+                        a.StartedBookingTime.IsOverlap(bookingTimeOption.StartedTime, bookingTimeOption.EndedTime) ||
+                        a.EndedBookingTime.IsOverlap(bookingTimeOption.StartedTime, bookingTimeOption.EndedTime));
+                    foreach (var time in existOverlap)
+                    {
+                        time.Delete();
+                    }
+                    var existBookingTime = _bookingTimes.FirstOrDefault(a =>
+                        a.SubjectId == subjectId && a.StartedBookingTime == bookingTimeOption.StartedTime &&
+                        a.EndedBookingTime == bookingTimeOption.EndedTime);
+                    if (existBookingTime is null)
+                    {
+                        _bookingTimes.Add(BookingTime.Add(bookingTimeOption.StartedTime, bookingTimeOption.EndedTime,
+                            subjectId));  
+                    }
 
-                _bookingTimes.Add(BookingTime.Add(startedBookingTime, endedBookingTime, subjectId));
+     
+                }
+                
             }
         }
         

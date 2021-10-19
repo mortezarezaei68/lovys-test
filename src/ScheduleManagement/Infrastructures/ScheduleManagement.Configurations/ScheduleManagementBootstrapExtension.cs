@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ScheduleManagement.Command.Handlers;
 using ScheduleManagement.Handlers;
 using ScheduleManagement.Persistence.EF.Repositories;
+using ScheduleManagement.Query.Handlers;
 
 namespace ScheduleManagement.Configurations
 {
@@ -24,11 +25,11 @@ namespace ScheduleManagement.Configurations
                 .AddClasses(classes => classes.AssignableTo(typeof(IScheduleManagementCommandHandlerMediatR<,>)))
                 .AsImplementedInterfaces()
                 .WithScopedLifetime());
-            // services.Scan(scan => scan
-            //     .FromAssemblyOf<GetOrderByIdQueryHandler>()
-            //     .AddClasses(classes => classes.AssignableTo(typeof(IQueryHandlerMediatR<,>)))
-            //     .AsImplementedInterfaces()
-            //     .WithScopedLifetime());
+            services.Scan(scan => scan
+                .FromAssemblyOf<GetCurrentUserScheduleQueryHandler>()
+                .AddClasses(classes => classes.AssignableTo(typeof(IQueryHandler)))
+                .AsImplementedInterfaces()
+                .WithScopedLifetime());
 
             return services;
         }

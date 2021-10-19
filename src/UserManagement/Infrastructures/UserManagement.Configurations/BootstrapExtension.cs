@@ -34,9 +34,14 @@ namespace UserManagement.Configurations
                 .AddClasses(classes => classes.AssignableTo(typeof(IUserManagementCommandHandlerMediatR<,>)))
                 .AsImplementedInterfaces()
                 .WithScopedLifetime());
+            // services.Scan(scan => scan
+            //     .FromAssemblyOf<GetAllAdminUsersQueryHandler>()
+            //     .AddClasses(classes => classes.AssignableTo(typeof(IQueryHandlerMediatR<,>)))
+            //     .AsImplementedInterfaces()
+            //     .WithScopedLifetime());
             services.Scan(scan => scan
-                .FromAssemblyOf<GetAdminUserByIdQueryHandler>()
-                .AddClasses(classes => classes.AssignableTo(typeof(IQueryHandlerMediatR<,>)))
+                .FromAssemblyOf<GetAllAdminUsersQueryHandler>()
+                .AddClasses(classes => classes.AssignableTo(typeof(IQueryHandler)))
                 .AsImplementedInterfaces()
                 .WithScopedLifetime());
             return services;
