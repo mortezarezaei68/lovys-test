@@ -3,23 +3,23 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Service.Query.Model.AdminUserQuery;
+using Service.Query.Model.GetAllUserQuery;
 using UserManagement.Domain;
 
-namespace Service.Query.AdminUserQuery
+namespace Service.Query.GetAllUserQuery
 {
-    public class GetAllAdminUsersQueryHandler:IGetAllAdminUsersQueryHandler
+    public class GetAllUsersQueryHandler:IGetAllUsersQueryHandler
     {
         private readonly UserManager<User> _userManager;
-        public GetAllAdminUsersQueryHandler(UserManager<User> userManager)
+        public GetAllUsersQueryHandler(UserManager<User> userManager)
         {
             _userManager = userManager;
         }
 
-        public async Task<GetAllAdminUserQueryResponse> Handle(GetAllAdminUserQueryRequest request, CancellationToken cancellationToken)
+        public async Task<GetAllUserQueryResponse> Handle(GetAllUserQueryRequest request, CancellationToken cancellationToken)
         {
             var users = await _userManager.Users.Select(
-                a => new AdminUserModel
+                a => new UserModel
                 {
                     SubjectId = a.SubjectId.ToString(),
                     Email = a.Email,
@@ -29,7 +29,7 @@ namespace Service.Query.AdminUserQuery
                     UserName = a.UserName,
                     UserType = a.UserType
                 }).ToListAsync(cancellationToken: cancellationToken);
-            return new GetAllAdminUserQueryResponse(true, users,users.Count);
+            return new GetAllUserQueryResponse(true, users,users.Count);
         }
     }
 }

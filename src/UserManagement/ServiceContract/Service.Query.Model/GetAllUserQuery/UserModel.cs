@@ -1,8 +1,8 @@
 using UserManagement.Domain;
 
-namespace Service.Query.Model.AdminUserQuery
+namespace Service.Query.Model.GetAllUserQuery
 {
-    public class AdminUserModel
+    public class UserModel
     {
         public string Id { get; set; }
         public string SubjectId { get; set; }

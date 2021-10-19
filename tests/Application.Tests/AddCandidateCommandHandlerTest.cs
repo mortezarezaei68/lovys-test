@@ -8,7 +8,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using NSubstitute;
 using UserManagement.Command.Handlers.CandidateCommandHandlers;
-using UserManagement.Commands.CustomerUserCommands;
+using UserManagement.Commands.CandidateUserCommands;
 using UserManagement.Domain;
 using Xunit;
 

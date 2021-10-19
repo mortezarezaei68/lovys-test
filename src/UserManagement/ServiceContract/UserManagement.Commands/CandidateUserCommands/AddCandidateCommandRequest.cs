@@ -1,7 +1,6 @@
-using MediatR;
 using UserManagement.Handlers;
 
-namespace UserManagement.Commands.CustomerUserCommands
+namespace UserManagement.Commands.CandidateUserCommands
 {
     public class AddCandidateCommandRequest:IUserManagementRequest<AddCandidateCommandResponse>
     {

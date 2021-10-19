@@ -6,9 +6,8 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Service.Query.AdminUserQuery;
+using Service.Query.GetAllUserQuery;
 using UserManagement.Command.Handlers.CandidateCommandHandlers;
-using UserManagement.Command.Handlers.InterviewerUserCommandHandlers;
 using UserManagement.Handlers;
 using UserManagement.Persistence.EF.Repository;
 
@@ -40,7 +39,7 @@ namespace UserManagement.Configurations
             //     .AsImplementedInterfaces()
             //     .WithScopedLifetime());
             services.Scan(scan => scan
-                .FromAssemblyOf<GetAllAdminUsersQueryHandler>()
+                .FromAssemblyOf<GetAllUsersQueryHandler>()
                 .AddClasses(classes => classes.AssignableTo(typeof(IQueryHandler)))
                 .AsImplementedInterfaces()
                 .WithScopedLifetime());
