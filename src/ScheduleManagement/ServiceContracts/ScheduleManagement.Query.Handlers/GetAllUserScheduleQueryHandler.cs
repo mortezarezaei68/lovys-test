@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using ScheduleManagement.Domain;
 using ScheduleManagement.Persistence.EF.Context;
 using ScheduleManagement.Query.Commands.GetAllScheduleInterviewCandidate;
 using UserManagement.Domain;
@@ -81,25 +79,6 @@ namespace ScheduleManagement.Query.Handlers
                     }).ToList();
 
             return new GetAllUserScheduleQueryResponse(true, bookingDateTimeResult);
-        }
-    }
-
-    internal class InterviewerCandidateComparer : IEqualityComparer<BookingDateBookingTimeView>
-    {
-        public bool Equals(BookingDateBookingTimeView view, BookingDateBookingTimeView timeView)
-        {
-            if (view.EndedBookingTime == timeView.EndedBookingTime && view.StartedBookingTime == timeView.StartedBookingTime &&
-                view.DateOfBooking == timeView.DateOfBooking && view.SubjectId != timeView.SubjectId)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        public int GetHashCode(BookingDateBookingTimeView obj)
-        {
-            return obj.DateOfBooking.GetHashCode();
         }
     }
 }

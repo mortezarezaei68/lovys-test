@@ -6,7 +6,7 @@ using ScheduleManagement.Persistence.EF.Context;
 
 namespace ScheduleManagement.Configurations
 {
-    public static class SeedOrderData
+    public static class SeedScheduleData
     {
         public static async Task InitializeScheduleDatabase(this IApplicationBuilder app)
         {

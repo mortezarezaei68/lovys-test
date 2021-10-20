@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Framework.Queries;
+using Framework.Query;
 
 namespace Service.Query.Model.GetAllUserQuery
 {

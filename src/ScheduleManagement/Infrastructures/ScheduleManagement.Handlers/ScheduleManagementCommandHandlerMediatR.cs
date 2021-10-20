@@ -9,23 +9,23 @@ using ScheduleManagement.Persistence.EF.UnitOfWork;
 
 namespace ScheduleManagement.Handlers
 {
-    public class ScheduleManagementCommandHandlerMediatR<TOrderCommandRequest, TCommandResponse> :
-        IScheduleManagementCommandHandlerMediatR<TOrderCommandRequest, TCommandResponse>
-        where TCommandResponse : ResponseCommand where TOrderCommandRequest : IRequest<TCommandResponse>
+    public class ScheduleManagementCommandHandlerMediatR<TScheduleCommandRequest, TCommandResponse> :
+        IScheduleManagementCommandHandlerMediatR<TScheduleCommandRequest, TCommandResponse>
+        where TCommandResponse : ResponseCommand where TScheduleCommandRequest : IRequest<TCommandResponse>
     {
-        private readonly ILogger<ScheduleManagementCommandHandlerMediatR<TOrderCommandRequest, TCommandResponse>>
+        private readonly ILogger<ScheduleManagementCommandHandlerMediatR<TScheduleCommandRequest, TCommandResponse>>
             _logger;
 
         private readonly IScheduleManagementUnitOfWork _unitOfWork;
 
         public ScheduleManagementCommandHandlerMediatR(IScheduleManagementUnitOfWork unitOfWork,
-            ILogger<ScheduleManagementCommandHandlerMediatR<TOrderCommandRequest, TCommandResponse>> logger)
+            ILogger<ScheduleManagementCommandHandlerMediatR<TScheduleCommandRequest, TCommandResponse>> logger)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
         }
 
-        public async Task<TCommandResponse> Handle(TOrderCommandRequest request,
+        public async Task<TCommandResponse> Handle(TScheduleCommandRequest request,
             CancellationToken cancellationToken, RequestHandlerDelegate<TCommandResponse> next)
         {
             if (request is IScheduleManagementRequest<TCommandResponse>)

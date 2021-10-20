@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Framework.Queries;
+using Framework.Query;
 
 namespace ScheduleManagement.Query.Commands
 {

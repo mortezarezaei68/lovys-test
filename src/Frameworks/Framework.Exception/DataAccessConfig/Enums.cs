@@ -4,31 +4,31 @@ namespace Framework.Exception.DataAccessConfig
 {
     public enum CudResultStatus
     {
-        [Display(Name = "عملیات با موفقیت انجام شد")]
+        [Display(Name = "your request is successful")]
         Success = 0,
-        [Display(Name = "رکورد تکراری")]
+        [Display(Name = "duplicate error")]
         Duplicate = 1,
-        [Display(Name = "خطای اعتبارسنجی")]
+        [Display(Name = "UnAuthorize")]
         ValidationError = 2,
-        [Display(Name = "خطای کلی")]
+        [Display(Name = "General error")]
         GeneralException = 3,
-        [Display(Name = "خطای کلید خارجی")]
+        [Display(Name = "Foreign key error")]
         ForiegnKeyException = 4,
-        [Display(Name = "رکورد یافت نشد")]
+        [Display(Name = "record not found")]
         NotFound = 5
     }
 
     public enum ResultStatus
     {
-        [Display(Name = "عملیات با موفقیت انجام شد")]
+        [Display(Name = "Successfull")]
         Success = 0,
-        [Display(Name = "یافت نشد")]
+        [Display(Name ="NotFound")]
         NotFound = 1,
-        [Display(Name = "لیست خالی است")]
+        [Display(Name ="List Is Empty")]
         ListEmpty = 2,
-        [Display(Name = "خطای دسترسی")]
+        [Display(Name ="UnAuthorized")]
         UnAuthorized = 3,
-        [Display(Name = "خطای کلی")]
+        [Display(Name = "General error")]
         GeneralException = 4,
     }
 

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Framework.Queries
+﻿namespace Framework.Query
 {
     public class BaseResponseQuery
     {

@@ -2,7 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Framework.Commands.CommandHandlers;
 using Framework.Domain.Core;
-using Framework.Queries;
+using Framework.Query;
 using MediatR;
 
 namespace Framework.EventBus
