@@ -14,9 +14,6 @@ Tech stack used : ASP.NET Core 3.1, C# 9.0 and SqlServer and ASP.NET Identity an
 - used eventbus and mediatR library to simplfy communication between commands and api service
 
 
-This text you see here is *actually- written in Markdown! To get a feel
-for Markdown's syntax, type some text into the left window and
-watch the results in the right.
 
 ## running in developing software like visual studio, rider, vs code
 
