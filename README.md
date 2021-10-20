@@ -44,8 +44,9 @@ you should set cors origin in `Startup.cs`
 ## Docker
 you can build and running application in docker with this command in terminal or dos:
     ```
-    docker-compose up --build
+    docker-compose up -d --build
     ```
+after that you can see the excute application swagger on `http://localhost:8080/swagger/index.html`
 ## API description
 | api | description | type |
 | :---: | :---: | :---: |
@@ -58,7 +59,9 @@ you can build and running application in docker with this command in terminal or
 
 ## Notice
 
-when you want to use `/api/v1/Schedule` api to create a booking datatime you should use this format:
+* it doesn't any seed and you can add it to application
+
+* when you want to use `/api/v1/Schedule` api to create a booking datatime you should use this format:
 ```
 {
   "bookingDate": "2021-10-19",
@@ -67,7 +70,7 @@ when you want to use `/api/v1/Schedule` api to create a booking datatime you sho
 }
 ```
 
-the response of `/api/v1/Schedule/interviewer-schedule` api is like this for Mary and Diana and John intersection:
+* the response of `/api/v1/Schedule/interviewer-schedule` api is like this for Mary and Diana and John intersection:
 ```
 {
   "data": [
