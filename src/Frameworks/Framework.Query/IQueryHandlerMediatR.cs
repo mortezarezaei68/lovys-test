@@ -1,4 +1,3 @@
-using Framework.Queries;
 using MediatR;
 
 namespace Framework.Query
