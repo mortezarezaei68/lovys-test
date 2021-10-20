@@ -10,7 +10,7 @@ using ScheduleManagement.Persistence.EF.Context;
 namespace ScheduleManagement.Persistence.EF.Migrations
 {
     [DbContext(typeof(ScheduleManagementDbContext))]
-    [Migration("20211018093647_Init")]
+    [Migration("20211020052710_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

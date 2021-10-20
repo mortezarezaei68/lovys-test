@@ -10,7 +10,7 @@ using UserManagement.Persistence.EF.Context;
 namespace UserManagement.Persistence.EF.Migrations
 {
     [DbContext(typeof(UserManagementDbContext))]
-    [Migration("20211016181510_Init")]
+    [Migration("20211020053131_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
